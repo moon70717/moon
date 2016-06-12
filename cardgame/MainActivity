@@ -1,0 +1,55 @@
+package com.example.pc.myapplication;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextClock;
+import android.widget.TextView;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class MainActivity extends Activity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        int arr[][]=new int[2][6];
+        String[] icons={"img1","img2","img3","img4","img5","img6","img_d"};
+        setContentView(R.layout.activity_main);
+        ImageButton btn1=(ImageButton)findViewById(R.id.btn1);
+//        btn1.setImageResource(R.drawable.img1);
+            for(int j=0;j<6;j++){
+                int ran=(int)(Math.random()*12)+1;
+                if(arr[0][ran-1]!=0){
+                    if(arr[1][ran-1]!=0){
+                        j--;
+                    }
+                    else
+                        arr[1][ran-1]=j;
+                }
+                else
+                    arr[0][ran-1]=j;
+            }
+        for(int i=0;i<6;i++){
+        }
+
+        LinearLayout layout = (LinearLayout) findViewById(R.id.layout);
+
+        for (int i = 0; i <6; i++) {///이미지를 배열에넣어서 가져오는곳
+            int resId = getResources().getIdentifier(icons[i], "drawable",
+                    "com.androidside.imageviewdemoc1");
+
+            ImageButton image = new ImageButton(this);
+            image.setImageResource(resId);
+
+            layout.addView(image);
+        }
+    }
+}
