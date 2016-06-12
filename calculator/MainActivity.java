@@ -50,14 +50,10 @@ public class MainActivity extends Activity {
             TextView text = (TextView) findViewById(R.id.textView);
             switch (v.getId()) {
                 case R.id.button://C(있는 값을 지움)
-                    if (tada != "") {
-                        tada = "";
-                        tada2 = "";
-                        //tada = Double.toString(tet);//더블을 스트링으로 변환
-                        //i=Double.parseDouble(tada);스트링을 더블로
-                    }
+                    tada = "";
+                    tada2 = "";
                     temp = "";
-                    text.setText("0");//내용 업데이트를 해줌
+                    text.setText("0");
                     Log.d("n", "c");
                     break;
                 case R.id.button2://   /(나누기)
@@ -237,6 +233,9 @@ public class MainActivity extends Activity {
                     Log.d("n", "3");
                     break;
                 case R.id.button15://=(결과구하기)
+                    if(tada2==""){
+                    break;
+                    }
                     i = Double.parseDouble(tada);
                     j = Double.parseDouble(tada2);
                     if (temp == "/") {
@@ -251,37 +250,35 @@ public class MainActivity extends Activity {
 
                         tada = Double.toString((i * j));
                     }
-                    temp = "";//계산이 끝나고 부호가 없게함
+                    temp = "";
                     tada2 = "";
                     text.setText(tada);
                     break;
-                case R.id.button16://0///////////수정필요,특정문자찾기로 해결
+                case R.id.button16://0
                     if (temp == "") {
                         B = tada.startsWith("0");
-                        if (tada==""||tada=="0") {
+                        if(B=false) {
+                            if (tada == "") {
+                                break;
+                            } else {
+                                tada += "0";
+                                text.setText(tada);
+                            }
+                            Log.d("n", "0");
                             break;
-                            //tada+="0";
-                            //text.setText(tada);
-                        } else if (tada == "")
-                            break;
-                        else {
-                            tada += "0";
-                            text.setText(tada);
                         }
-                        Log.d("n", "0");
-                        break;
                     } else {
-//                        B = tada2.startsWith("0");
-                        if (tada2==""||tada2=="0") {
+                        B = tada2.startsWith("0");
+                        if (B = false) {
+                            if (tada2 == "") {
+                                break;
+                            } else {
+                                tada2 += "0";
+                                text.setText(tada + temp + tada2);
+                            }
+                            Log.d("n", "0");
                             break;
-                        } else if (tada2 == "")
-                            break;
-                        else {
-                            tada2 += "0";
-                            text.setText(tada + temp + tada2);
                         }
-                        Log.d("n", "0");
-                        break;
                     }
                 case R.id.button17://.(점)
                     Boolean c;
@@ -313,18 +310,20 @@ public class MainActivity extends Activity {
                         tada="";
                         text.setText("0");
                         break;}
+
                     if (tada2 == "") {
                         if (temp == "") {
                             tada = tada.substring(0, tada.length() - 1);
                             if(tada==""||tada==null||tada.length()==0){
                                 tada="";
                                 text.setText("0");
-                                break;}
+                                break;
+                            }
                             text.setText(tada);
-                    } else
-                        temp = "";
-                    text.setText(tada + temp);
-            }
+                        }else
+                            temp = "";
+                            text.setText(tada);
+                    }
                     else{
                         tada2=tada2.substring(0, tada2.length()-1);
                         text.setText(tada+temp+tada2);
