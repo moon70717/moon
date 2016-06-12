@@ -258,7 +258,7 @@ public class MainActivity extends Activity {
                 case R.id.button16://0///////////수정필요,특정문자찾기로 해결
                     if (temp == "") {
                         B = tada.startsWith("0");
-                        if (B = true) {
+                        if (tada==""||tada=="0") {
                             break;
                             //tada+="0";
                             //text.setText(tada);
@@ -271,8 +271,8 @@ public class MainActivity extends Activity {
                         Log.d("n", "0");
                         break;
                     } else {
-                        B = tada2.startsWith("0");
-                        if (B = true) {
+//                        B = tada2.startsWith("0");
+                        if (tada2==""||tada2=="0") {
                             break;
                         } else if (tada2 == "")
                             break;
@@ -310,15 +310,15 @@ public class MainActivity extends Activity {
                     break;
                 case R.id.b://제거
                     if(tada==""||tada==null||tada.length()==0){
-                        tada="0";
-                        text.setText(tada);
+                        tada="";
+                        text.setText("0");
                         break;}
                     if (tada2 == "") {
                         if (temp == "") {
                             tada = tada.substring(0, tada.length() - 1);
                             if(tada==""||tada==null||tada.length()==0){
-                                tada="0";
-                                text.setText(tada);
+                                tada="";
+                                text.setText("0");
                                 break;}
                             text.setText(tada);
                     } else
