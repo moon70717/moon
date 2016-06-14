@@ -1,6 +1,6 @@
 package com.example.pc.myapplication;
 
-
+package com.example.myapplication;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -57,7 +57,9 @@ public class MainActivity extends Activity {
                     Log.d("n", "c");
                     break;
                 case R.id.button2://   /(나누기)
-                    if (tada2 == "") {
+                    if(tada.substring(tada.length()-1, tada.length())==".")
+                        break;
+                    else if (tada2 == "") {
                         temp = "/";
                         text.setText(tada + temp);
                     } else {
@@ -78,7 +80,9 @@ public class MainActivity extends Activity {
                     }
                     break;
                 case R.id.button3://*
-                    if (tada2 == "") {
+                    if(tada.substring(tada.length()-1, tada.length())==".")
+                        break;
+                    else if (tada2 == "") {
                         temp = "*";
                         text.setText(tada + temp);
                     } else {
@@ -99,7 +103,9 @@ public class MainActivity extends Activity {
                     }
                     break;
                 case R.id.button4://-
-                    if (tada2 == "") {
+                    if(tada.substring(tada.length()-1, tada.length())==".")
+                        break;
+                    else if (tada2 == "") {
                         temp = "-";
                         text.setText(tada + temp);
                     } else {
@@ -151,7 +157,9 @@ public class MainActivity extends Activity {
                     Log.d("n", "9");
                     break;
                 case R.id.button8://+
-                    if (tada2 == "") {
+                    if(tada.substring(tada.length()-1, tada.length())==".")
+                        break;
+                    else if (tada2 == "") {
                         temp = "+";
                         text.setText(tada + temp);
                     } else {
@@ -234,7 +242,7 @@ public class MainActivity extends Activity {
                     break;
                 case R.id.button15://=(결과구하기)
                     if(tada2==""){
-                    break;
+                        break;
                     }
                     i = Double.parseDouble(tada);
                     j = Double.parseDouble(tada2);
@@ -322,7 +330,7 @@ public class MainActivity extends Activity {
                             text.setText(tada);
                         }else
                             temp = "";
-                            text.setText(tada);
+                        text.setText(tada);
                     }
                     else{
                         tada2=tada2.substring(0, tada2.length()-1);
