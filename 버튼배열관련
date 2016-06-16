@@ -4,7 +4,7 @@ public static Class<?> classes[] = {AA.class, BB.class, CC.class, DD.class, EE.c
 ButtonCnt[i]= (Button)findViewById(buttons[i]);
 Intent intent = new Intent(this, classes[i]);
 
-안드로이드에서는 다양한것을 배열에 넣을수있다
+안드로이드에서는 객체를 배열에 넣을수있다
         String[] icons={"img1","img2","img3","img4","img5","img6","img_d"};
         for (int i = 0; i <6; i++) {
             int resId = getResources().getIdentifier(icons[i], "drawable","com.example.myapplication");//이미지를 받아오는부분
