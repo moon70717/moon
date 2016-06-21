@@ -1,54 +1,87 @@
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 
 public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int arr[]=new int[12];
+        int arr[][]=new int[2][6];
         String[] icons={"img1","img2","img3","img4","img5","img6","img_d"};
-        ImageButton btns[]=new ImageButton[12];
-        btns[0] = (ImageButton)findViewById(R.id.btn1);
-        btns[1] = (ImageButton)findViewById(R.id.btn2);
-        btns[2] = (ImageButton)findViewById(R.id.btn3);
-        btns[3] = (ImageButton)findViewById(R.id.btn4);
-
         setContentView(R.layout.activity_main);
         ImageButton btn1=(ImageButton)findViewById(R.id.btn1);
 //        btn1.setImageResource(R.drawable.img1);
-        LinearLayout layout = (LinearLayout) findViewById(R.id.layout);
-        int temp=0;
-
-        for(int i=0;i<12;i++){//들어갈 이미지의 번호를 지정한다
-            int ran=(int)(Math.random()*6);
-            for(int j=0;j<i;j++){
-                if(arr[j]==ran) {
-                    temp++;
+/*         for(int j=0;j<6;j++){
+            int ran=(int)(Math.random()*12)+1;
+            if(arr[0][ran-1]!=0){
+                if(arr[1][ran-1]!=0){
+                    j--;
                 }
-                else if (arr[j] == ran) {
-                    temp++;
-                }
+                else
+                    arr[1][ran-1]=j;
             }
-            if(temp==0)
-                arr[i]=ran;
-            else if(temp==1)
-                arr[i]=ran;
             else
-                i--;
-//            temp=0;
+                arr[0][ran-1]=j;
         }
-        int startbtn =R.id.btn1;
-        for (int i = 0; i <12; i++) {//이미지를 변경하는부분
+        for(int i=0;i<6;i++){//이미지 넣는거 구현
+        }
+
+        LinearLayout layout = (LinearLayout) findViewById(R.id.layout);
+
+        for (int i = 0; i <6; i++) {
             int resId = getResources().getIdentifier(icons[i], "drawable",
                     "com.example.myapplication");
-                ImageButton te = (ImageButton)findViewById(startbtn);
-                startbtn++;
-            ImageButton button = (ImageButton)findViewById(R.id.btn1);
+
             ImageButton image = new ImageButton(this);
-            te.setImageResource(resId);
+            image.setImageResource(resId);
+
+            layout.addView(image);
+        }*/
+    }
+    public void onClick(View v){
+        String[] icons={"img1","img2","img3","img4","img5","img6","img_d"};//이미지가 저장되는배열
+        String[] btns={"btn1","btn2","btn3","btn4","btn5","btn6"};//버튼이 들어갈배열, 위에거하고 비슷한방식으로 쓸수있을거같다
+
+        ImageButton btn1=(ImageButton)findViewById(R.id.btn1);
+        int arr[][]=new int[2][6];
+        int arrs[]=new int[12];//배열번호가 이미지번호고 거기에 들어간게 해당되는 버튼번호
+        int buttons[] = { R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5};
+        for(int i=0;i<2;i++){
+            for(int j=0;j<6;j++){
+                arr[i][j]=0;
+            }
         }
+        for(int i=0;i<12;i++)
+            arrs[i]=0;
+
+        for(int j=0;j<12;j++){
+            int ran=(int)(Math.random()*6)+1;
+            if(arr[0][ran-1]!=0){
+                if(arr[1][ran-1]!=0){
+                    j--;
+                }
+                else
+                    arr[1][ran-1]=j;
+            }
+            else
+                arr[0][ran-1]=j;
+        }
+        for(int i=0;i<6;i++){
+            arrs[i]=arr[0][i];
+        }int jx=0;
+        for(int i=6;i<arrs.length;i++){
+
+            arrs[i]=arr[1][jx];
+            jx++;
+        }
+        //셀렉터를 이용하여 이미지 버튼에 이미지를넣자
+
+        int resId = getResources().getIdentifier(icons[5], "drawable",//이걸로 이미지를 배열에서 꺼네와서 사용가능함
+                "com.example.myapplication");
+        btn1.setImageResource(resId);
+        int mainId = getResources().getIdentifier(btns[5], "drawable",
+                "com.example.myapplication");
     }
 }
