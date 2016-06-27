@@ -19,8 +19,8 @@ public class MainActivity extends Activity {
         setContentView(view);
     }
     public class My_Touch extends View {
-        private float x;//경로가 저장될 변수
-        private float y;
+        private float x=400;//경로가 저장될 변수
+        private float y=650;
         private String action="NO";
 
         public My_Touch(Context context) {//생성자
@@ -38,8 +38,8 @@ public class MainActivity extends Activity {
             }
             if(event.getAction()==MotionEvent.ACTION_UP) {
                 action = "UP";
-                x=0;
-                y=0;
+                /*x=0;
+                y=0;*/
             }
             invalidate();//이벤트가 발생할때마다 갱신을 하도록함
             return true;
