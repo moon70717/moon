@@ -1,0 +1,62 @@
+
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Toast;
+
+public class MainActivity extends Activity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        View view = new My_Touch(this);
+        setContentView(view);
+    }
+    public class My_Touch extends View {
+        private float x;//경로가 저장될 변수
+        private float y;
+        private String action="NO";
+
+        public My_Touch(Context context) {//생성자
+            super(context);
+        }
+        public boolean onTouchEvent(MotionEvent event) {//메소드를 오버라이딩한상태
+            x = event.getX();//매게변수로 넘어온 event에서 x좌표를 가져옴
+            y = event.getY();
+
+            if(event.getAction()==MotionEvent.ACTION_DOWN) {
+                action = "DOWN";
+            }
+            if(event.getAction()==MotionEvent.ACTION_MOVE) {
+                action = "MOVE";
+            }
+            if(event.getAction()==MotionEvent.ACTION_UP) {
+                action = "UP";
+                x=0;
+                y=0;
+            }
+            invalidate();//이벤트가 발생할때마다 갱신을 하도록함
+            return true;
+        }
+        protected void onDraw(Canvas canvas) {//캔버스 메소드를 오버라이딩함
+            canvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher), x, y, null);
+            canvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher), 150, 150, null);
+            Paint pa = new Paint();
+            pa.setTextSize(30);
+            pa.setColor(Color.RED);
+            canvas.drawText("x=" + x + "y=" + y, 0, 30, pa);//출력할것,출력될곳의 위치(x,y),출력될곳의 높이
+            if((x>=100&&x<=200)&&(y<=200&&y>=100)){//이지점을 지나가면 토스트출력
+                Toast toast = Toast.makeText(MainActivity.this, "꽝", Toast.LENGTH_SHORT );
+                toast.show();
+            }
+
+            canvas.drawText("ACTION:"+action,0,40,pa);
+        }
+    }
+    }
