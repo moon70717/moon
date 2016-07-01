@@ -1,0 +1,16 @@
+
+public static final int buttons[] = { R.id.button1, R.id.button2, R.id.button3, R.id.button4, R.id.button5};
+public static Class<?> classes[] = {AA.class, BB.class, CC.class, DD.class, EE.class};
+
+ButtonCnt[i]= (Button)findViewById(buttons[i]);
+Intent intent = new Intent(this, classes[i]);
+
+안드로이드에서는 객체를 배열에 넣을수있다
+        String[] icons={"img1","img2","img3","img4","img5","img6","img_d"};
+        for (int i = 0; i <6; i++) {
+            int resId = getResources().getIdentifier(icons[i], "drawable","com.example.myapplication");//이미지를 받아오는부분
+            ImageButton image = new ImageButton(this);//이미지버튼을 사용할것임을 선언
+            image.setImageResource(resId);//이미지버튼의 이미지를 설정한다
+        }
+        
+이것과 cardgame/layout/main 을 같이사용하면 이미지들을 배열에 넣어 사용가능하다
