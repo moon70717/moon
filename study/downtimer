@@ -1,0 +1,35 @@
+import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.TextView;
+
+// 타이머 구현방법  (CountDownTimer를 사용함)
+public class MainActivity extends AppCompatActivity {
+    int value=0;
+    TextView mText;
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        mText=(TextView)findViewById(R.id.text);
+
+        // 핸들러를 사용하지 않고도 일정시간마다 (혹은 후에) 코스를 수행할수 있도록
+        // CountDownTimer 클래스가 제공된다.
+        // '총시간'  과 '인터벌(간격)' 을 주면 매 간격마다 onTick 메소드를 수행한다.
+        new CountDownTimer(50 * 1000, 1000){
+
+            @Override
+            public void onTick(long millisUntilFinished) { // 총 시간과 주기
+                value++;
+                mText.setText("Value=" + value);
+                Log.d("dlog","값:"+value);
+            }
+
+            @Override
+            public void onFinish() {
+                Log.d("dlog","end");
+            }
+        }.start();  // 타이머 시작
+    }
+}
