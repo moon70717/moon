@@ -1,0 +1,30 @@
+package com.example.moon7.radiobutton;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        RadioGroup Rg=(RadioGroup)findViewById(R.id.Rgroup);//라디오 그룹을 선언해줘야함
+        Rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                TextView text=(TextView)findViewById(R.id.text);
+                switch (i){
+                    case R.id.Rbtn1:
+                        text.setText("btn1");
+                        break;
+                    case R.id.Rbtn2:
+                        text.setText("btn2");
+                        break;
+                }
+            }
+        });
+    }
+}
