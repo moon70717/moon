@@ -1,0 +1,149 @@
+public class MainActivity extends Activity {
+    DbHelper mDbHelper;
+    SQLiteDatabase mDb;
+    EditText mEditName;
+    EditText mEditKorean;
+    EditText mEditMath;
+    ListView mListMember;
+    Cursor mCursor;
+    ArrayList<String> mArMember = new ArrayList<String>();
+    ArrayAdapter<String> mAdapter;
+    int mSelIndex = -1;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        mEditName = (EditText)findViewById(R.id.editName);
+        mEditKorean = (EditText)findViewById(R.id.editKorean);
+        mEditMath = (EditText)findViewById(R.id.editMath);
+
+        // DBHelper 생성
+        mDbHelper = new DbHelper(this);
+        mDb = mDbHelper.getWritableDatabase();
+        // ListView 초기화
+        initListView();
+        // 모든 레코드 화면에 갱신
+        readAllRecords();
+    }
+
+    // ListView 초기화
+    public void initListView() {
+        // 어댑터 생성
+        mAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, mArMember);
+        // ListView 와 어댑터를 연결
+        mListMember = (ListView)findViewById(R.id.listMember);
+        mListMember.setAdapter(mAdapter);
+        mListMember.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        mListMember.setDivider(new ColorDrawable(Color.GRAY));
+        mListMember.setDividerHeight(2);
+        mListMember.setOnItemClickListener(mItemListener);
+    }
+
+
+    // Add 버튼 이벤트 함수
+    public void onBtnAdd() {
+        String strName = mEditName.getText().toString();
+        String strKorean = mEditKorean.getText().toString();
+        String strMath = mEditMath.getText().toString();
+
+        // 사용자가 입력한 필드 데이터로 쿼리문 생성
+        String strQuery = "insert into Student(name, korean, math) values (' " + strName + " ', " + strKorean + ", " + strMath + ");";
+        // 새로운 레코드 추가
+        mDb.execSQL(strQuery);
+
+        // 모든 레코드를 화면에 갱신
+        readAllRecords();
+        // 추가된 레코드이 ID 를 멤버변수에 저장
+        mCursor.moveToLast();
+        mSelIndex = mCursor.getInt(0);
+    }
+
+    public void onClick(View v) {
+        switch( v.getId() ) {
+            case R.id.buttonAdd :
+                // Add 버튼 이벤트 함수
+                onBtnAdd();
+                break;
+            case R.id.buttonDel :
+                // Del 버튼 이벤트 함수
+                onBtnDel();
+                break;
+            case R.id.buttonUpdate :
+                // Update 버튼 이벤트 함수
+                onBtnUpdate();
+                break;
+            case R.id.buttonMove:
+                Intent intent=new Intent(MainActivity.this,SubActivity.class);
+                startActivity(intent);
+                break;
+        }
+    }
+
+    // Update 버튼 이벤트 함수
+    public void onBtnUpdate() {
+        String strName = mEditName.getText().toString();
+        String strKorean = mEditKorean.getText().toString();
+        String strMath = mEditMath.getText().toString();
+
+        // 사용자가 입력한 필드 데이터로 쿼리문 생성
+        String strQuery = "update Student set name = ' " + strName + " ', korean = " + strKorean + ", math = " + strMath + " where _id = " + mSelIndex;
+        // 새로운 레코드 추가
+        mDb.execSQL(strQuery);
+        // 모든 레코드를 화면에 갱신
+        readAllRecords();
+    }
+
+    // Del 버튼 이벤트 함수
+    public void onBtnDel() {
+        mDb.execSQL("delete from Student where _id = " + mSelIndex);
+        // 모든 레코드를 화면에 갱신
+        readAllRecords();
+    }
+
+
+    // 모든 레코드를 화면에 갱신
+    public void readAllRecords() {
+        // ArrayList 에 모든 항목 삭제
+        mArMember.clear();
+        // DB 에서 모든 레코드 데이터를 조회
+        String strQuery = "select _id, name, korean, math from Student";
+        mCursor = mDb.rawQuery(strQuery, null);
+
+        for(int i=0; i < mCursor.getCount(); i++) {
+            mCursor.moveToNext();
+            int nId = mCursor.getInt(0);
+            String strName = mCursor.getString(1);
+            int nKorean = mCursor.getInt(2);
+            int nMath = mCursor.getInt(3);
+            String strRecord = nId + ": " + strName + " / " + nKorean + " / " + nMath;
+            Log.d("tag", "Rec-" + strRecord);
+            mArMember.add(strRecord);
+        }
+        mAdapter.notifyDataSetChanged();
+    }
+
+    AdapterView.OnItemClickListener mItemListener = new AdapterView.OnItemClickListener() {
+        public void onItemClick(AdapterView parent, View view, int position, long id) {
+            viewRecord(position);
+        }
+    };
+
+    public void viewRecord(int nIndex) {
+        // 선택된 항목의 필드 내용을 구한다
+        mCursor.moveToPosition(nIndex);
+        int nId = mCursor.getInt(0);
+        String strName = mCursor.getString(1);
+        int nKorean = mCursor.getInt(2);
+        int nMath = mCursor.getInt(3);
+
+        // 필드 내용을 화면에 표시
+        mEditName.setText(strName);
+        mEditKorean.setText(Integer.toString(nKorean));
+        mEditMath.setText(Integer.toString(nMath));
+        mSelIndex = nId;
+    }
+
+}
