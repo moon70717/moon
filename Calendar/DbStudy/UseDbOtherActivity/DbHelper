@@ -1,0 +1,19 @@
+public  class DbHelper extends SQLiteOpenHelper {
+    public DbHelper(Context context) {
+        super(context, "ReportCard", null, 1);
+    }
+
+    // 앱이 처음 실행될때 한번만 수행된다
+    public void onCreate(SQLiteDatabase db) {//execSQL을 여러번해주면 테이블이 여러개 생성된다
+        // 테이블 생성
+        db.execSQL("create table Student ( _id integer PRIMARY KEY autoincrement, " +
+                "name TEXT, korean integer, math integer);");
+    }
+
+    // 데이터베이스 업그레이드 될때 수행된다
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        // 기존 테이블을 삭제하고 새로 생성
+        db.execSQL("drop table if exists Student");
+        onCreate(db);
+    }
+}
