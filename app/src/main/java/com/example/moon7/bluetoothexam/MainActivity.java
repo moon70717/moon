@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
             if(!mBlueAdapter.isEnabled()){//블루투스가 활성되지 않았을떄
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBtIntent, RESULT_OK);
+                Toast.makeText(MainActivity.this,"블루투스 설정완료",Toast.LENGTH_SHORT).show();
             }
         }
     }
