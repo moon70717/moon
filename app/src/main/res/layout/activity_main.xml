@@ -8,9 +8,25 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.moon7.bluetoothexam.MainActivity">
-
+<!--블루투스 실행버튼-->
+    <Button
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:onClick="onClick"
+        android:id="@+id/On_Bt"
+        android:text="블루투스 실행"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+    <Button
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:onClick="onClick"
+        android:id="@+id/Get_fare"
+        android:text="페어링된 기기출력" />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="1000dp"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:id="@+id/text"
+        android:layout_below="@+id/On_Bt"
+        />
 </RelativeLayout>
